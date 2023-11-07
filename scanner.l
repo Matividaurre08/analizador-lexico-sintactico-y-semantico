@@ -4,11 +4,15 @@
     #include <stdlib.h>
     #include <string.h>
     #include "parser.h"
+
+    char mensajeError[120];
 %}
 
 /*SECCION DE OPCIONES*/ 
-%option yylineno 
 %option outfile="scanner.c"
+
+%option yylineno 
+
 
 /*SECCION TOKENS*/
 LETRA               [A-Z]
@@ -37,7 +41,7 @@ LEER                "leer"
 MAYOR               "mayor"
 MENOR               "menor"
 IGUAL               "igual"
-DECLARACION        "decvar"
+DECLARACION         "decvar"
 
 LLAVE_IZQ           "{"
 LLAVE_DER           "}"
@@ -80,12 +84,6 @@ COMENTARIO          "$$"
 {CONSTANTE_FLOTANTE} {yylval.real = atof(yytext); return CONSTANTE_FLOTANTE;}
 
 " "
-"\n"
-.                    yyerror();
-
+"\n"                    
+.                    {sprintf(mensajeError,"Error Lexico, token invalido: %s\n",yytext);yyerror(mensajeError);}
 %%
-
-int yyerror() {
-    printf("Error Lexico, token invalido: %s",yytext);
-    exit(1);
-}

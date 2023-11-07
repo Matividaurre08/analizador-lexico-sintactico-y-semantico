@@ -1,7 +1,5 @@
-inicioPrograma 
-{
-    decvar { entero #A }
-    #A = 4**2
-    mostrar(#A)
+inicioPrograma {
+    decvar entero #VARIABLE1 = 4
+        
 } 
 finPrograma

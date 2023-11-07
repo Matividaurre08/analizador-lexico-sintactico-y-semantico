@@ -1,7 +1,9 @@
 @echo off
-bison -d -o parser.c parser.y
-flex -l scanner.l	
-gcc -o main parser.c scanner.c -lfl
-./main < prueba.txt
+bison parser.y
+flex scanner.l
+gcc -Wall parser.c scanner.c -o programa.exe -lfl -lm
+./programa.exe prueba.txt
+del parser.h
+del parser.c
 del scanner.c
 pause
