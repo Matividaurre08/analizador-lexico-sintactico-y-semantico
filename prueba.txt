@@ -1,0 +1,7 @@
+inicioPrograma 
+{
+    decvar { entero #A }
+    #A = 4**2
+    mostrar(#A)
+} 
+finPrograma
