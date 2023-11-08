@@ -4,15 +4,14 @@
     #include <stdlib.h>
     #include <string.h>
     #include "parser.h"
-
+    int yyerror();
     char mensajeError[120];
 %}
 
 /*SECCION DE OPCIONES*/ 
 %option outfile="scanner.c"
-
 %option yylineno 
-
+%option noyywrap
 
 /*SECCION TOKENS*/
 LETRA               [A-Z]
@@ -25,30 +24,30 @@ CONSTANTE_ENTERA    -?{DIGITO}+
 CONSTANTE_FLOTANTE  -?{DIGITO}+{CHAR_PUNTO}{DIGITO}+
 
 OP_SUMA             ["+"]
-OP_RESTA            "-"
-OP_DIVISION         "/"
-OP_MULTIPLICACION   "*"
-OP_EXPONENTE        "**"
-OP_RAIZ             "sqrt"
-OP_ASIGNACION       "="
+OP_RESTA            ["-"]
+OP_DIVISION         ["/"]
+OP_MULTIPLICACION   ["*"]
+OP_EXPONENTE        ["**"]
+OP_RAIZ             ["sqrt"]
+OP_ASIGNACION       ["="]
 
-INICIO_PROGRAMA     "inicioPrograma"
-FIN_PROGRAMA        "finPrograma"
-ENTERO              "entero"
-FLOTANTE            "flotante"
-MOSTRAR             "mostrar"
-LEER                "leer"
-MAYOR               "mayor"
-MENOR               "menor"
-IGUAL               "igual"
-DECLARACION         "decvar"
+INICIO_PROGRAMA     ["inicioPrograma"]
+FIN_PROGRAMA        ["finPrograma"]
+ENTERO              ["entero"]
+FLOTANTE            ["flotante"]
+MOSTRAR             ["mostrar"]
+LEER                ["leer"]
+MAYOR               ["mayor"]
+MENOR               ["menor"]
+IGUAL               ["igual"]
+DECLARACION         ["decvar"]
 
-LLAVE_IZQ           "{"
-LLAVE_DER           "}"
-PARENTESIS_IZQ      "("
-PARENTESIS_DER      ")"
-COMA                ","
-COMENTARIO          "$$"
+LLAVE_IZQ           ["{"]
+LLAVE_DER           ["}"]
+PARENTESIS_IZQ      ["("]
+PARENTESIS_DER      [")"]
+COMA                [","]
+COMENTARIO          ["$$"]
 
 /*SECCION DE REGLAS*/
 /*Primero muestro las palabras reservadas porque sino las identifica como identificadores*/
@@ -85,5 +84,6 @@ COMENTARIO          "$$"
 
 " "
 "\n"                    
-.                    {sprintf(mensajeError,"Error Lexico, token invalido: %s\n",yytext);yyerror(mensajeError);}
+.                    {printf("Error Lexico, token invalido: %s\n",yytext);}
 %%
+

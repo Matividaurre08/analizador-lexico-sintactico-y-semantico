@@ -1,7 +1,10 @@
+%locations 
 %code top {
     #include <stdio.h>
+    #include <stdlib.h>
+    #include "parser.h"
     int yylex();
-    #include "scanner.h"
+    int yyerror();
 }
 
 %defines "parser.h"
@@ -13,9 +16,9 @@
     int entero;
 }
 
-%start              inicio 
+%start              inicio
 
-%token<str>         INICIO_PROGRAMA FIN_PROGRAMA ENTERO FLOTANTE MOSTRAR LEER MAYOR MENOR IGUAL DECLARACION
+%token              INICIO_PROGRAMA FIN_PROGRAMA ENTERO FLOTANTE MOSTRAR LEER MAYOR MENOR IGUAL DECLARACION
 
 %token<real>        CONSTANTE_FLOTANTE
 
@@ -27,31 +30,20 @@
 
 %token              LLAVE_IZQ LLAVE_DER PARENTESIS_IZQ PARENTESIS_DER COMA COMENTARIO
 
-%type<real> expresion 
 %%
 
-inicio:                 /*produccionVacia*/
-                        | inicioPrograma '{' '\n' sentencia '}' '\n' finPrograma
+inicio:             inicioPrograma            
 
-inicioPrograma:         INICIO_PROGRAMA
+inicioPrograma:     INICIO_PROGRAMA                                             {exit(0);}
+                    | INICIO_PROGRAMA LLAVE_IZQ linea LLAVE_DER FIN_PROGRAMA          {exit(0);}
 
-finPrograma:            FIN_PROGRAMA
+linea:              linea sentencia
+                    | sentencia
 
-sentencia:              /*produccionVacia*/
-                        | sentencia '\n' sentenciaAsignacion         
-
-sentenciaAsignacion:     DECLARACION ENTERO IDENTIFICADOR '=' expresion '\n'            {printf("\t Resultado: %.10g\n>",$1)}
-
-expresion: CONSTANTE_ENTERA { $$ = $1; }
-
+sentencia:          DECLARACION ENTERO {exit(0);}
 %%
 
 int yyerror(char *mensajeError) {
-    printf("Linea #%d_ %s\n",yylineno, mensajeError);
+    printf("Error sintactico: %s\n", mensajeError);
     exit(1);
-}
-
-int main(int argc, char *argv[])
-{
-    return yyparse();
 }

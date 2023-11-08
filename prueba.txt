@@ -1,5 +1,1 @@
-inicioPrograma {
-    decvar entero #VARIABLE1 = 4
-        
-} 
-finPrograma
+inicioPrograma { decvar entero } finPrograma
