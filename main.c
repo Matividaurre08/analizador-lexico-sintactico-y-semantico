@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h> // atoi, itoa, exit
+#include "tablaSimbolos.h"
 #include "parser.h"
+
+tabla *tablaSimbolos = NULL;
 
 extern FILE *yyin;
 extern int yyparse();

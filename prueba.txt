@@ -1,1 +1,9 @@
-inicioPrograma { decvar entero } finPrograma
+inicioPrograma
+4
+#HOLADASDASDASDASDDADASDASDAS
+#HOL4@A
+#HOLA = 4
+#HOLA =
+3
+mostrar(4)
+finPrograma
