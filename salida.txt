@@ -1,1 +1,0 @@
-Uso: programa.exe archivo_de_entrada
