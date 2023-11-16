@@ -68,13 +68,14 @@
 
     #include <stdio.h>
     #include <stdlib.h>
+    #include <math.h>
     #include "scanner.h"
     #include "parser.h"
     #include "tablaSimbolos.h"
     tabla *aux;
     extern char mensajeError[120];
 
-#line 78 "parser.c"
+#line 79 "parser.c"
 
 
 
@@ -121,28 +122,30 @@ enum yysymbol_kind_t
   YYSYMBOL_CONSTANTE_REAL = 13,            /* CONSTANTE_REAL  */
   YYSYMBOL_CONSTANTE_ENTERA = 14,          /* CONSTANTE_ENTERA  */
   YYSYMBOL_IDENTIFICADOR = 15,             /* IDENTIFICADOR  */
-  YYSYMBOL_OP_SUMA = 16,                   /* OP_SUMA  */
-  YYSYMBOL_OP_RESTA = 17,                  /* OP_RESTA  */
-  YYSYMBOL_OP_MULTIPLICACION = 18,         /* OP_MULTIPLICACION  */
-  YYSYMBOL_OP_DIVISION = 19,               /* OP_DIVISION  */
-  YYSYMBOL_OP_EXPONENTE = 20,              /* OP_EXPONENTE  */
-  YYSYMBOL_OP_RAIZ = 21,                   /* OP_RAIZ  */
-  YYSYMBOL_OP_ASIGNACION = 22,             /* OP_ASIGNACION  */
-  YYSYMBOL_LLAVE_IZQ = 23,                 /* LLAVE_IZQ  */
-  YYSYMBOL_LLAVE_DER = 24,                 /* LLAVE_DER  */
-  YYSYMBOL_PARENTESIS_IZQ = 25,            /* PARENTESIS_IZQ  */
-  YYSYMBOL_PARENTESIS_DER = 26,            /* PARENTESIS_DER  */
-  YYSYMBOL_PUNTOYCOMA = 27,                /* PUNTOYCOMA  */
-  YYSYMBOL_SALTOLINEA = 28,                /* SALTOLINEA  */
-  YYSYMBOL_YYACCEPT = 29,                  /* $accept  */
-  YYSYMBOL_inicio = 30,                    /* inicio  */
-  YYSYMBOL_programa = 31,                  /* programa  */
-  YYSYMBOL_linea = 32,                     /* linea  */
-  YYSYMBOL_sentencia = 33,                 /* sentencia  */
-  YYSYMBOL_sentenciaExpresion = 34,        /* sentenciaExpresion  */
-  YYSYMBOL_sentenciaSalida = 35,           /* sentenciaSalida  */
-  YYSYMBOL_tipo = 36,                      /* tipo  */
-  YYSYMBOL_expresion = 37                  /* expresion  */
+  YYSYMBOL_LITERALCADENA = 16,             /* LITERALCADENA  */
+  YYSYMBOL_OP_SUMA = 17,                   /* OP_SUMA  */
+  YYSYMBOL_OP_RESTA = 18,                  /* OP_RESTA  */
+  YYSYMBOL_OP_MULTIPLICACION = 19,         /* OP_MULTIPLICACION  */
+  YYSYMBOL_OP_DIVISION = 20,               /* OP_DIVISION  */
+  YYSYMBOL_OP_EXPONENTE = 21,              /* OP_EXPONENTE  */
+  YYSYMBOL_OP_RAIZ = 22,                   /* OP_RAIZ  */
+  YYSYMBOL_OP_ASIGNACION = 23,             /* OP_ASIGNACION  */
+  YYSYMBOL_LLAVE_IZQ = 24,                 /* LLAVE_IZQ  */
+  YYSYMBOL_LLAVE_DER = 25,                 /* LLAVE_DER  */
+  YYSYMBOL_PARENTESIS_IZQ = 26,            /* PARENTESIS_IZQ  */
+  YYSYMBOL_PARENTESIS_DER = 27,            /* PARENTESIS_DER  */
+  YYSYMBOL_COMA = 28,                      /* COMA  */
+  YYSYMBOL_SALTOLINEA = 29,                /* SALTOLINEA  */
+  YYSYMBOL_YYACCEPT = 30,                  /* $accept  */
+  YYSYMBOL_inicio = 31,                    /* inicio  */
+  YYSYMBOL_programa = 32,                  /* programa  */
+  YYSYMBOL_linea = 33,                     /* linea  */
+  YYSYMBOL_sentencia = 34,                 /* sentencia  */
+  YYSYMBOL_sentenciaAsignacion = 35,       /* sentenciaAsignacion  */
+  YYSYMBOL_sentenciaSalida = 36,           /* sentenciaSalida  */
+  YYSYMBOL_listaExpresiones = 37,          /* listaExpresiones  */
+  YYSYMBOL_tipo = 38,                      /* tipo  */
+  YYSYMBOL_expresion = 39                  /* expresion  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -473,19 +476,19 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  4
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   32
+#define YYLAST   77
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  29
+#define YYNTOKENS  30
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  9
+#define YYNNTS  10
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  19
+#define YYNRULES  30
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  31
+#define YYNSTATES  56
 
 /* YYMAXUTOK -- Last valid token kind.  */
-#define YYMAXUTOK   283
+#define YYMAXUTOK   284
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -527,15 +530,17 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
-      25,    26,    27,    28
+      25,    26,    27,    28,    29
 };
 
 #if YYDEBUG
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    42,    42,    44,    44,    46,    47,    48,    49,    51,
-      51,    53,    54,    55,    56,    57,    59,    61,    61,    63
+       0,    45,    45,    47,    47,    49,    50,    51,    52,    54,
+      55,    57,    58,    59,    61,    62,    64,    65,    67,    68,
+      70,    71,    72,    73,    74,    75,    76,    77,    78,    79,
+      80
 };
 #endif
 
@@ -554,11 +559,12 @@ static const char *const yytname[] =
   "\"end of file\"", "error", "\"invalid token\"", "INICIO_PROGRAMA",
   "FIN_PROGRAMA", "ENTERO", "REAL", "MOSTRAR", "LEER", "MAYOR", "MENOR",
   "IGUAL", "DECLARACION", "CONSTANTE_REAL", "CONSTANTE_ENTERA",
-  "IDENTIFICADOR", "OP_SUMA", "OP_RESTA", "OP_MULTIPLICACION",
-  "OP_DIVISION", "OP_EXPONENTE", "OP_RAIZ", "OP_ASIGNACION", "LLAVE_IZQ",
-  "LLAVE_DER", "PARENTESIS_IZQ", "PARENTESIS_DER", "PUNTOYCOMA",
-  "SALTOLINEA", "$accept", "inicio", "programa", "linea", "sentencia",
-  "sentenciaExpresion", "sentenciaSalida", "tipo", "expresion", YY_NULLPTR
+  "IDENTIFICADOR", "LITERALCADENA", "OP_SUMA", "OP_RESTA",
+  "OP_MULTIPLICACION", "OP_DIVISION", "OP_EXPONENTE", "OP_RAIZ",
+  "OP_ASIGNACION", "LLAVE_IZQ", "LLAVE_DER", "PARENTESIS_IZQ",
+  "PARENTESIS_DER", "COMA", "SALTOLINEA", "$accept", "inicio", "programa",
+  "linea", "sentencia", "sentenciaAsignacion", "sentenciaSalida",
+  "listaExpresiones", "tipo", "expresion", YY_NULLPTR
 };
 
 static const char *
@@ -568,7 +574,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-26)
+#define YYPACT_NINF (-27)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -582,10 +588,12 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-       6,   -25,    10,     4,   -26,   -26,   -26,    -8,    15,   -26,
-       1,   -26,     0,   -26,    -6,   -26,   -26,   -26,    11,   -26,
-     -26,     9,    11,   -26,   -26,     3,     5,   -26,   -26,    11,
-     -26
+       3,   -26,    14,     1,   -27,   -27,   -27,    -4,    29,     2,
+     -27,     0,   -27,    -1,   -27,   -27,     5,   -27,   -27,    17,
+      30,   -27,   -27,   -27,   -27,   -27,    22,    30,    24,    30,
+      19,    56,    28,    56,   -27,   -10,    30,    40,   -27,    30,
+      30,    30,    30,    30,    30,    30,    45,   -27,    56,   -10,
+     -10,    56,    56,    56,    56,   -27
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -593,22 +601,24 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     0,     0,     0,     1,     8,     7,     0,     0,    19,
-      12,     5,     0,     3,     0,     9,    10,    11,     0,    17,
-      18,     0,     0,     4,     6,     0,    14,    13,    16,     0,
-      15
+       0,     0,     0,     0,     1,     8,     7,     0,     0,     0,
+       5,     0,     3,     0,     9,    10,     0,    18,    19,     0,
+       0,     4,     6,    21,    20,    22,     0,     0,     0,     0,
+       0,    17,    12,    11,    15,    24,     0,     0,    14,     0,
+       0,     0,     0,     0,     0,     0,     0,    30,    16,    23,
+      25,    26,    27,    28,    13,    29
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -26,   -26,   -26,    14,   -26,   -26,   -26,   -26,   -16
+     -27,   -27,   -27,    42,   -27,   -27,   -27,   -27,   -27,    -3
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     2,    12,    13,    14,    15,    16,    21,    17
+       0,     2,    11,    12,    13,    14,    15,    30,    19,    31
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -616,42 +626,56 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      -2,     5,    25,     3,     6,     5,    27,     7,     6,     1,
-       4,     7,     8,    30,     9,    10,     8,    18,     9,    10,
-      19,    20,    24,    22,    26,     9,    23,    29,    11,    28,
-       0,     0,    11
+      -2,     5,     5,     3,     6,     6,     1,     7,     7,    42,
+      43,    44,     8,     8,     4,     9,     9,    33,    23,    24,
+      25,    26,    16,    27,    35,    20,    37,    28,    22,    10,
+      10,    29,    32,    46,    17,    18,    48,    49,    50,    51,
+      52,    53,    54,    23,    24,    25,    38,    39,    27,    34,
+      36,    45,    28,    21,     0,     0,    29,    40,    41,    42,
+      43,    44,    40,    41,    42,    43,    44,    47,     0,     0,
+       0,     0,    55,    40,    41,    42,    43,    44
 };
 
 static const yytype_int8 yycheck[] =
 {
-       0,     1,    18,    28,     4,     1,    22,     7,     4,     3,
-       0,     7,    12,    29,    14,    15,    12,    25,    14,    15,
-       5,     6,    28,    22,    15,    14,    12,    22,    28,    26,
-      -1,    -1,    28
+       0,     1,     1,    29,     4,     4,     3,     7,     7,    19,
+      20,    21,    12,    12,     0,    15,    15,    20,    13,    14,
+      15,    16,    26,    18,    27,    23,    29,    22,    29,    29,
+      29,    26,    15,    36,     5,     6,    39,    40,    41,    42,
+      43,    44,    45,    13,    14,    15,    27,    28,    18,    27,
+      26,    23,    22,    11,    -1,    -1,    26,    17,    18,    19,
+      20,    21,    17,    18,    19,    20,    21,    27,    -1,    -1,
+      -1,    -1,    27,    17,    18,    19,    20,    21
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     3,    30,    28,     0,     1,     4,     7,    12,    14,
-      15,    28,    31,    32,    33,    34,    35,    37,    25,     5,
-       6,    36,    22,    32,    28,    37,    15,    37,    26,    22,
-      37
+       0,     3,    31,    29,     0,     1,     4,     7,    12,    15,
+      29,    32,    33,    34,    35,    36,    26,     5,     6,    38,
+      23,    33,    29,    13,    14,    15,    16,    18,    22,    26,
+      37,    39,    15,    39,    27,    39,    26,    39,    27,    28,
+      17,    18,    19,    20,    21,    23,    39,    27,    39,    39,
+      39,    39,    39,    39,    39,    27
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    29,    30,    31,    31,    32,    32,    32,    32,    33,
-      33,    34,    34,    34,    34,    34,    35,    36,    36,    37
+       0,    30,    31,    32,    32,    33,    33,    33,    33,    34,
+      34,    35,    35,    35,    36,    36,    37,    37,    38,    38,
+      39,    39,    39,    39,    39,    39,    39,    39,    39,    39,
+      39
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
        0,     2,     3,     1,     2,     1,     2,     1,     1,     1,
-       1,     1,     1,     3,     3,     5,     4,     1,     1,     1
+       1,     3,     3,     5,     4,     4,     3,     1,     1,     1,
+       1,     1,     1,     3,     2,     3,     3,     3,     3,     4,
+       3
 };
 
 
@@ -1499,55 +1523,127 @@ yyreduce:
   switch (yyn)
     {
   case 7: /* linea: FIN_PROGRAMA  */
-#line 48 "parser.y"
+#line 51 "parser.y"
                                                                                     {exit(0);}
-#line 1505 "parser.c"
-    break;
-
-  case 11: /* sentenciaExpresion: expresion  */
-#line 53 "parser.y"
-                                                                                    {printf("HOLI\n");}
-#line 1511 "parser.c"
-    break;
-
-  case 12: /* sentenciaExpresion: IDENTIFICADOR  */
-#line 54 "parser.y"
-                                                                                    {aux = obtenerIdentificador((yyvsp[0].str)); if(aux){(yyval.entero) = aux->valor;} else {sprintf(mensajeError,"Error semantico -> ID %s no declarado",(yyvsp[0].str));yyerror(mensajeError);}}
-#line 1517 "parser.c"
-    break;
-
-  case 13: /* sentenciaExpresion: IDENTIFICADOR OP_ASIGNACION expresion  */
-#line 55 "parser.y"
-                                                                                    {aux = obtenerIdentificador((yyvsp[-2].str)); if(aux){(yyval.entero) = aux -> valor += (yyvsp[0].entero);} else { sprintf(mensajeError,"Error semantico -> ID %s no declarado",(yyvsp[-2].str));yyerror(mensajeError);}}
-#line 1523 "parser.c"
-    break;
-
-  case 14: /* sentenciaExpresion: DECLARACION tipo IDENTIFICADOR  */
-#line 56 "parser.y"
-                                                                                    {aux = obtenerIdentificador((yyvsp[0].str)); if(aux){printf("Error, identficador %s ya declarado",(yyvsp[0].str));} else {aux = ingresarIdentificador((yyvsp[0].str),(yyvsp[-1].str));(yyval.entero) = aux->valor = 0;}}
 #line 1529 "parser.c"
     break;
 
-  case 15: /* sentenciaExpresion: DECLARACION tipo IDENTIFICADOR OP_ASIGNACION expresion  */
+  case 11: /* sentenciaAsignacion: IDENTIFICADOR OP_ASIGNACION expresion  */
 #line 57 "parser.y"
-                                                                                    {aux = obtenerIdentificador((yyvsp[-2].str)); if(aux){printf("Error, identficador %s ya declarado",(yyvsp[-2].str));} else {aux = ingresarIdentificador((yyvsp[-2].str),(yyvsp[-3].str));(yyval.entero) = aux->valor = (yyvsp[0].entero);}}
+                                                                                    {aux = obtenerIdentificador((yyvsp[-2].str)); if(aux){aux -> valor += (yyvsp[0].real);} else { sprintf(mensajeError,"Error Semantico -> ID %s no declarado",(yyvsp[-2].str));yyerror(mensajeError);}}
 #line 1535 "parser.c"
     break;
 
-  case 16: /* sentenciaSalida: MOSTRAR PARENTESIS_IZQ expresion PARENTESIS_DER  */
-#line 59 "parser.y"
-                                                                                    {printf("%d\n",(yyvsp[-1].entero));}
+  case 12: /* sentenciaAsignacion: DECLARACION tipo IDENTIFICADOR  */
+#line 58 "parser.y"
+                                                                                    {aux = obtenerIdentificador((yyvsp[0].str)); if(aux != NULL){sprintf(mensajeError,"Error Semantico -> identificador %s ya declarado",(yyvsp[0].str));yyerror(mensajeError);} else {aux = ingresarIdentificador((yyvsp[0].str),(yyvsp[-1].entero));aux->valor = (double)0;}}
 #line 1541 "parser.c"
     break;
 
-  case 19: /* expresion: CONSTANTE_ENTERA  */
-#line 63 "parser.y"
-                                                                                    {(yyval.entero) = (yyvsp[0].entero);}
+  case 13: /* sentenciaAsignacion: DECLARACION tipo IDENTIFICADOR OP_ASIGNACION expresion  */
+#line 59 "parser.y"
+                                                                                    {aux = obtenerIdentificador((yyvsp[-2].str)); if(aux != NULL){sprintf(mensajeError,"Error Semantico -> identificador %s ya declarado",(yyvsp[-2].str));yyerror(mensajeError);} else {aux = ingresarIdentificador((yyvsp[-2].str),(yyvsp[-3].entero));aux->valor = (double)(yyvsp[0].real);}}
 #line 1547 "parser.c"
     break;
 
+  case 15: /* sentenciaSalida: MOSTRAR PARENTESIS_IZQ LITERALCADENA PARENTESIS_DER  */
+#line 62 "parser.y"
+                                                                                    {printf("%s\n",(yyvsp[0].str));}
+#line 1553 "parser.c"
+    break;
 
-#line 1551 "parser.c"
+  case 16: /* listaExpresiones: listaExpresiones COMA expresion  */
+#line 64 "parser.y"
+                                                                                    {if((yyvsp[0].real)-(int)(yyvsp[0].real) == 0) {printf("%d\n", (int)(yyvsp[0].real));} else {printf("%f\n",(yyvsp[0].real));}}
+#line 1559 "parser.c"
+    break;
+
+  case 17: /* listaExpresiones: expresion  */
+#line 65 "parser.y"
+                                                                                    {if((yyvsp[0].real)-(int)(yyvsp[0].real) == 0) {printf("%d\n", (int)(yyvsp[0].real));} else {printf("%f\n",(yyvsp[0].real));}}
+#line 1565 "parser.c"
+    break;
+
+  case 18: /* tipo: ENTERO  */
+#line 67 "parser.y"
+                                                                                    {(yyval.entero)=TIPO_ENTERO;}
+#line 1571 "parser.c"
+    break;
+
+  case 19: /* tipo: REAL  */
+#line 68 "parser.y"
+                                                                                    {(yyval.entero)=TIPO_REAL;}
+#line 1577 "parser.c"
+    break;
+
+  case 20: /* expresion: CONSTANTE_ENTERA  */
+#line 70 "parser.y"
+                                                                                    {(yyval.real) = (double)(yyvsp[0].entero);}
+#line 1583 "parser.c"
+    break;
+
+  case 21: /* expresion: CONSTANTE_REAL  */
+#line 71 "parser.y"
+                                                                                    {(yyval.real) = (double)(yyvsp[0].real);}
+#line 1589 "parser.c"
+    break;
+
+  case 22: /* expresion: IDENTIFICADOR  */
+#line 72 "parser.y"
+                                                                                    {aux = obtenerIdentificador((yyvsp[0].str)); if(aux){(yyval.real) = aux->valor;} else {sprintf(mensajeError,"Error semantico -> ID %s no declarado",(yyvsp[0].str));yyerror(mensajeError);}}
+#line 1595 "parser.c"
+    break;
+
+  case 23: /* expresion: expresion OP_SUMA expresion  */
+#line 73 "parser.y"
+                                                                                    {(yyval.real) = (yyvsp[-2].real) + (yyvsp[0].real);}
+#line 1601 "parser.c"
+    break;
+
+  case 24: /* expresion: OP_RESTA expresion  */
+#line 74 "parser.y"
+                                                                                    {(yyval.real) = - (yyvsp[0].real);}
+#line 1607 "parser.c"
+    break;
+
+  case 25: /* expresion: expresion OP_RESTA expresion  */
+#line 75 "parser.y"
+                                                                                    {(yyval.real) = (yyvsp[-2].real) - (yyvsp[0].real);}
+#line 1613 "parser.c"
+    break;
+
+  case 26: /* expresion: expresion OP_MULTIPLICACION expresion  */
+#line 76 "parser.y"
+                                                                                    {(yyval.real) = (yyvsp[-2].real) * (yyvsp[0].real);}
+#line 1619 "parser.c"
+    break;
+
+  case 27: /* expresion: expresion OP_DIVISION expresion  */
+#line 77 "parser.y"
+                                                                                    {(yyval.real) = (yyvsp[-2].real) / (yyvsp[0].real);}
+#line 1625 "parser.c"
+    break;
+
+  case 28: /* expresion: expresion OP_EXPONENTE expresion  */
+#line 78 "parser.y"
+                                                                                    {(yyval.real) = pow((yyvsp[-2].real),(yyvsp[0].real));}
+#line 1631 "parser.c"
+    break;
+
+  case 29: /* expresion: OP_RAIZ PARENTESIS_IZQ expresion PARENTESIS_DER  */
+#line 79 "parser.y"
+                                                                                    {(yyval.real) = sqrt((double)(yyvsp[-1].real));}
+#line 1637 "parser.c"
+    break;
+
+  case 30: /* expresion: PARENTESIS_IZQ expresion PARENTESIS_DER  */
+#line 80 "parser.y"
+                                                                                    {(yyval.real) = (yyvsp[-1].real);}
+#line 1643 "parser.c"
+    break;
+
+
+#line 1647 "parser.c"
 
       default: break;
     }
@@ -1776,7 +1872,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 65 "parser.y"
+#line 81 "parser.y"
 
 
 void yyerror(const char *s){

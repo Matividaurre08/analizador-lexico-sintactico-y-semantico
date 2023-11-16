@@ -16,9 +16,7 @@ typedef struct tabla
     struct tabla *siguiente; // para enlazar con otra entrada
 } tabla;
 
-extern tabla *tablaSimbolos;
-
-tabla *ingresarIdentificador(char *, char *);
+tabla *ingresarIdentificador(char *, int);
 tabla *obtenerIdentificador(char *);
 
 #endif

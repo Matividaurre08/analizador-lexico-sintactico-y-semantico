@@ -1,10 +1,12 @@
 inicioPrograma
 decvar entero #A = 1
-decvar entero #B = 1
-decvar entero #C = -2
+#B = -3.5
+decvar real #C = 2.5
+decvar real #A = 1
 
 decvar real #NUMERADORA = - #B + sqrt( (#B**2) - (4*#A*#C) )
 decvar real #NUMERADORB = - #B - sqrt( (#B**2) - (4*#A*#C) )
 decvar real #DENOMINADOR = 2*#A
+mostrar(--raices 1 y 2--)
 mostrar(#NUMERADORA/#DENOMINADOR , #NUMERADORB/#DENOMINADOR)
 finPrograma

@@ -67,19 +67,20 @@ extern int yydebug;
     CONSTANTE_REAL = 268,          /* CONSTANTE_REAL  */
     CONSTANTE_ENTERA = 269,        /* CONSTANTE_ENTERA  */
     IDENTIFICADOR = 270,           /* IDENTIFICADOR  */
-    OP_SUMA = 271,                 /* OP_SUMA  */
-    OP_RESTA = 272,                /* OP_RESTA  */
-    OP_MULTIPLICACION = 273,       /* OP_MULTIPLICACION  */
-    OP_DIVISION = 274,             /* OP_DIVISION  */
-    OP_EXPONENTE = 275,            /* OP_EXPONENTE  */
-    OP_RAIZ = 276,                 /* OP_RAIZ  */
-    OP_ASIGNACION = 277,           /* OP_ASIGNACION  */
-    LLAVE_IZQ = 278,               /* LLAVE_IZQ  */
-    LLAVE_DER = 279,               /* LLAVE_DER  */
-    PARENTESIS_IZQ = 280,          /* PARENTESIS_IZQ  */
-    PARENTESIS_DER = 281,          /* PARENTESIS_DER  */
-    PUNTOYCOMA = 282,              /* PUNTOYCOMA  */
-    SALTOLINEA = 283               /* SALTOLINEA  */
+    LITERALCADENA = 271,           /* LITERALCADENA  */
+    OP_SUMA = 272,                 /* OP_SUMA  */
+    OP_RESTA = 273,                /* OP_RESTA  */
+    OP_MULTIPLICACION = 274,       /* OP_MULTIPLICACION  */
+    OP_DIVISION = 275,             /* OP_DIVISION  */
+    OP_EXPONENTE = 276,            /* OP_EXPONENTE  */
+    OP_RAIZ = 277,                 /* OP_RAIZ  */
+    OP_ASIGNACION = 278,           /* OP_ASIGNACION  */
+    LLAVE_IZQ = 279,               /* LLAVE_IZQ  */
+    LLAVE_DER = 280,               /* LLAVE_DER  */
+    PARENTESIS_IZQ = 281,          /* PARENTESIS_IZQ  */
+    PARENTESIS_DER = 282,          /* PARENTESIS_DER  */
+    COMA = 283,                    /* COMA  */
+    SALTOLINEA = 284               /* SALTOLINEA  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -88,13 +89,13 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 20 "parser.y"
+#line 21 "parser.y"
 
     char *str;
     double real;
     int entero;
 
-#line 98 "parser.h"
+#line 99 "parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -123,10 +124,10 @@ extern YYLTYPE yylloc;
 int yyparse (void);
 
 /* "%code provides" blocks.  */
-#line 12 "parser.y"
+#line 13 "parser.y"
 
 void yyerror(const char *);
 
-#line 131 "parser.h"
+#line 132 "parser.h"
 
 #endif /* !YY_YY_PARSER_H_INCLUDED  */
