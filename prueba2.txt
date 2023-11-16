@@ -3,9 +3,10 @@ decvar entero #A = 1
 decvar real #B = -3.5
 decvar real #C = 2.5
 
-decvar real #NUMERADORA = - #B + sqrt( (#B**2) - (4*#A*#C) )
-decvar real #NUMERADORB = - #B - sqrt( (#B**2) - (4*#A*#C) )
+decvar real #NUMERADORA = - #B + sqrt( #B**2 - 4*#A*#C )
+decvar real #NUMERADORB = - #B - sqrt( #B**2 - 4*#A*#C )
 decvar real #DENOMINADOR = 2*#A
 mostrar(--raices 1 y 2--)
 mostrar(#NUMERADORA/#DENOMINADOR , #NUMERADORB/#DENOMINADOR)
+
 finPrograma

@@ -59,28 +59,25 @@ extern int yydebug;
     ENTERO = 260,                  /* ENTERO  */
     REAL = 261,                    /* REAL  */
     MOSTRAR = 262,                 /* MOSTRAR  */
-    LEER = 263,                    /* LEER  */
-    MAYOR = 264,                   /* MAYOR  */
-    MENOR = 265,                   /* MENOR  */
-    IGUAL = 266,                   /* IGUAL  */
-    DECLARACION = 267,             /* DECLARACION  */
-    CONSTANTE_REAL = 268,          /* CONSTANTE_REAL  */
-    CONSTANTE_ENTERA = 269,        /* CONSTANTE_ENTERA  */
-    IDENTIFICADOR = 270,           /* IDENTIFICADOR  */
-    LITERALCADENA = 271,           /* LITERALCADENA  */
-    OP_SUMA = 272,                 /* OP_SUMA  */
-    OP_RESTA = 273,                /* OP_RESTA  */
-    OP_MULTIPLICACION = 274,       /* OP_MULTIPLICACION  */
-    OP_DIVISION = 275,             /* OP_DIVISION  */
-    OP_EXPONENTE = 276,            /* OP_EXPONENTE  */
-    OP_RAIZ = 277,                 /* OP_RAIZ  */
-    OP_ASIGNACION = 278,           /* OP_ASIGNACION  */
-    LLAVE_IZQ = 279,               /* LLAVE_IZQ  */
-    LLAVE_DER = 280,               /* LLAVE_DER  */
-    PARENTESIS_IZQ = 281,          /* PARENTESIS_IZQ  */
-    PARENTESIS_DER = 282,          /* PARENTESIS_DER  */
-    COMA = 283,                    /* COMA  */
-    SALTOLINEA = 284               /* SALTOLINEA  */
+    MAYOR = 263,                   /* MAYOR  */
+    MENOR = 264,                   /* MENOR  */
+    IGUAL = 265,                   /* IGUAL  */
+    DECLARACION = 266,             /* DECLARACION  */
+    CONSTANTE_REAL = 267,          /* CONSTANTE_REAL  */
+    CONSTANTE_ENTERA = 268,        /* CONSTANTE_ENTERA  */
+    IDENTIFICADOR = 269,           /* IDENTIFICADOR  */
+    LITERALCADENA = 270,           /* LITERALCADENA  */
+    OP_SUMA = 271,                 /* OP_SUMA  */
+    OP_RESTA = 272,                /* OP_RESTA  */
+    OP_MULTIPLICACION = 273,       /* OP_MULTIPLICACION  */
+    OP_DIVISION = 274,             /* OP_DIVISION  */
+    OP_EXPONENTE = 275,            /* OP_EXPONENTE  */
+    OP_RAIZ = 276,                 /* OP_RAIZ  */
+    OP_ASIGNACION = 277,           /* OP_ASIGNACION  */
+    PARENTESIS_IZQ = 278,          /* PARENTESIS_IZQ  */
+    PARENTESIS_DER = 279,          /* PARENTESIS_DER  */
+    COMA = 280,                    /* COMA  */
+    SALTOLINEA = 281               /* SALTOLINEA  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -95,7 +92,7 @@ union YYSTYPE
     double real;
     int entero;
 
-#line 99 "parser.h"
+#line 96 "parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -128,6 +125,6 @@ int yyparse (void);
 
 void yyerror(const char *);
 
-#line 132 "parser.h"
+#line 129 "parser.h"
 
 #endif /* !YY_YY_PARSER_H_INCLUDED  */

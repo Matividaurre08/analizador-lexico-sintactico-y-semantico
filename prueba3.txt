@@ -2,10 +2,14 @@ inicioPrograma
 decvar entero #CATETOA = 2
 decvar entero #CATETOB = 5
 
-decvar real #HIPOTENUSA = sqrt((2**2)+(5**2))
+decvar real #HIPOTENUSA = sqrt(2**2+5**2)
 mostrar(--hipotenusa--)
 mostrar(#HIPOTENUSA)
 
 mostrar(--seno entre hipotenusa y cateto A--)
 mostrar(#HIPOTENUSA/#CATETOA)
+
+mostrar(--hipotenusa mayor a los catetos--)
+mayor(#HIPOTENUSA,#CATETOA)
+mayor(#HIPOTENUSA,#CATETOB)
 finPrograma

@@ -23,7 +23,7 @@ IDENTIFICADOR       {CHAR_NUMERAL}{LETRA}{1,15}
 CONSTANTE_ENTERA    -?{DIGITO}+
 CONSTANTE_REAL      -?{DIGITO}+{CHAR_PUNTO}{DIGITO}+
 LITERALCADENA       "--"([A-Z]|[a-z]|" "|[0-9])+"--"
-OTROS               [[:punct:]]{-}[()+\-*/^]
+OTROS               [[:punct:]]{-}[()+\-*/,=]
 
 OP_SUMA             "+"
 OP_RESTA            "-"
@@ -38,14 +38,11 @@ FIN_PROGRAMA        "finPrograma"
 ENTERO              "entero"
 REAL                "real"
 MOSTRAR             "mostrar"
-LEER                "leer"
 MAYOR               "mayor"
 MENOR               "menor"
 IGUAL               "igual"
 DECLARACION         "decvar"
 
-LLAVE_IZQ           "{"
-LLAVE_DER           "}"
 PARENTESIS_IZQ      "("
 PARENTESIS_DER      ")"
 COMA                ","
@@ -66,14 +63,11 @@ COMA                ","
 {ENTERO}             {return ENTERO;}
 {REAL}               {return REAL;}
 {MOSTRAR}            {return MOSTRAR;}
-{LEER}               {return LEER;}
 {MAYOR}              {return MAYOR;}
 {MENOR}              {return MENOR;}
 {IGUAL}              {return IGUAL;}
 {DECLARACION}        {return DECLARACION;}
 
-{LLAVE_IZQ}          {return LLAVE_IZQ;}
-{LLAVE_DER}          {return LLAVE_DER;}
 {PARENTESIS_IZQ}     {return PARENTESIS_IZQ;}
 {PARENTESIS_DER}     {return PARENTESIS_DER;}
 {COMA}               {return COMA;}
@@ -85,10 +79,10 @@ COMA                ","
 
 {CONSTANTE_ENTERA}                                                  {yylval.entero = atoi(yytext); return CONSTANTE_ENTERA;}
 {CONSTANTE_REAL}                                                    {yylval.real = atof(yytext); return CONSTANTE_REAL;}
-{CONSTANTE_ENTERA}({CONSTANTE_ENTERA}|{LETRA}|{DIGITO}|{OTROS})+    {sprintf(mensajeError,"Error Lexico -> constante real invalida: %s",yytext);yyerror(mensajeError);}
-{CONSTANTE_REAL}({CONSTANTE_REAL}|{LETRA}|{DIGITO}|{OTROS})+        {sprintf(mensajeError,"Error Lexico -> constante real invalida: %s",yytext);yyerror(mensajeError);}
+{CONSTANTE_ENTERA}({CONSTANTE_ENTERA}|{LETRA}|{DIGITO}|{OTROS})+    {sprintf(mensajeError,"Error Lexico -> constante numerica invalida: %s",yytext);yyerror(mensajeError);}
+
 "\n"                                                                return SALTOLINEA;
 " "
-.                                                   {sprintf(mensajeError,"Error Lexico, token invalido: %s",yytext);yyerror(mensajeError);}
+.                                                                   {sprintf(mensajeError,"Error Lexico, token invalido: %s",yytext);yyerror(mensajeError);}
 %%
 

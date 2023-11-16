@@ -3,8 +3,8 @@ decvar entero #A = 1
 decvar entero #B = 1
 decvar entero #C = -2
 
-decvar real #NUMERADORA = - #B + sqrt( (#B**2) - (4*#A*#C) )
-decvar real #NUMERADORB = - #B - sqrt( (#B**2) - (4*#A*#C) )
+decvar real #NUMERADORA = - #B + sqrt( #B**2 - 4*#A*#C )
+decvar real #NUMERADORB = - #B - sqrt( #B**2 - 4*#A*#C )
 decvar real #DENOMINADOR = 2*#A
 mostrar(#NUMERADORA/#DENOMINADOR , #NUMERADORB/#DENOMINADOR)
 finPrograma
