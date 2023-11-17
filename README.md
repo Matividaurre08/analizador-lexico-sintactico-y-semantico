@@ -12,11 +12,11 @@
 | Nombre                        | Legajo           |
 |-------------------------------|------------------|
 | Brandon Lojo                  |            |
-| Manuel Martínez               |            |
-| Valentina Polo Curbelo        |            |
+| Manuel Martínez               | 209.074-0           |
+| Valentina Polo Curbelo        | 208.799-6           |
 | Martín Alberto Rincón         | 174.347-8           |
-| Enzo Martín Salazar Jancko    |            |
-| Nicolás Togninelli            |            |
+| Enzo Martín Salazar Jancko    | 209.181-1           |
+| Nicolás Togninelli            | 208.840-0           |
 | Matías Javier Vidaurre        | 175.605-9           |
 | Matías Zuran                  |            |
 
