@@ -2,7 +2,7 @@ inicioPrograma
 decvar entero #A = 1
 #B = -3.5
 decvar real #C = 2.5
-decvar real #A = 1
+decvar real #ABCDEFGHIJKLMASDASDSDAS = 1
 
 decvar real #NUMERADORA = - #B + sqrt( (#B**2) - (4*#A*#C) )
 decvar real #NUMERADORB = - #B - sqrt( (#B**2) - (4*#A*#C) )

@@ -11,5 +11,5 @@ mostrar(#HIPOTENUSA/#CATETOA)
 
 mostrar(--hipotenusa mayor a los catetos--)
 mayor(#HIPOTENUSA,#CATETOA)
-mayor(#HIPOTENUSA,#CATETOB)
+menor(#HIPOTENUSA,#CATETOB)
 finPrograma
