@@ -1,8 +1,6 @@
-# TP Anual Sintaxis
+# TP Anual de Sintaxis y Semantica de los Lenguajes
 
 ---
-
-**TP Anual de Sintaxis**
 
 **Curso:** K2005  
 **Grupo:** 1
